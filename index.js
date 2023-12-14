@@ -24,7 +24,7 @@ const positionWidth = 42;
 const columns = 17;
 const boardWidth = positionWidth*columns;
 
-const stepTime = 200; 
+const stepTime = 200;  
 
 let lanes;
 let currentLane;
@@ -169,8 +169,8 @@ function Car() {
       new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true, map: carFrontTexture } ),
       new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true, map: carRightSideTexture } ),
       new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true, map: carLeftSideTexture } ),
-      new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true } ), 
-      new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true } ) 
+      new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true } ), // top
+      new THREE.MeshPhongMaterial( { color: 0xcccccc, flatShading: true } ) // bottom
     ]
   );
   cabin.position.x = 6*zoom;
@@ -218,12 +218,12 @@ function Truck() {
   const cabin = new THREE.Mesh(
     new THREE.BoxBufferGeometry( 25*zoom, 30*zoom, 30*zoom ), 
     [
-      new THREE.MeshPhongMaterial( { color, flatShading: true } ), 
+      new THREE.MeshPhongMaterial( { color, flatShading: true } ), // back
       new THREE.MeshPhongMaterial( { color, flatShading: true, map: truckFrontTexture } ),
       new THREE.MeshPhongMaterial( { color, flatShading: true, map: truckRightSideTexture } ),
       new THREE.MeshPhongMaterial( { color, flatShading: true, map: truckLeftSideTexture } ),
-      new THREE.MeshPhongMaterial( { color, flatShading: true } ), 
-      new THREE.MeshPhongMaterial( { color, flatShading: true } ) 
+      new THREE.MeshPhongMaterial( { color, flatShading: true } ), // top
+      new THREE.MeshPhongMaterial( { color, flatShading: true } ) // bottom
     ]
   );
   cabin.position.x = -40*zoom;
@@ -432,19 +432,19 @@ document.getElementById('right').addEventListener("click", () => move('right'));
 
 window.addEventListener("keydown", event => {
   if (event.keyCode == '38') {
-
+    
     move('forward');
   }
   else if (event.keyCode == '40') {
-
+     
     move('backward');
   }
   else if (event.keyCode == '37') {
-
+    
     move('left');
   }
   else if (event.keyCode == '39') {
-
+     
     move('right');
   }
 });
@@ -487,6 +487,7 @@ function animate(timestamp) {
   const delta = timestamp - previousTimestamp;
   previousTimestamp = timestamp;
 
+ 
   lanes.forEach(lane => {
     if(lane.type === 'car' || lane.type === 'truck') {
       const aBitBeforeTheBeginingOfLane = -boardWidth*zoom/2 - positionWidth*2*zoom;
@@ -515,8 +516,7 @@ function animate(timestamp) {
         const positionY = currentLane*positionWidth*zoom + moveDeltaDistance;
         camera.position.y = initialCameraPositionY + positionY; 
         dirLight.position.y = initialDirLightPositionY + positionY; 
-        chicken.position.y = positionY; 
-
+        chicken.position.y = positionY;  
         chicken.position.z = jumpDeltaDistance;
         break;
       }
@@ -533,7 +533,7 @@ function animate(timestamp) {
         const positionX = (currentColumn*positionWidth+positionWidth/2)*zoom -boardWidth*zoom/2 - moveDeltaDistance;
         camera.position.x = initialCameraPositionX + positionX;     
         dirLight.position.x = initialDirLightPositionX + positionX; 
-        chicken.position.x = positionX; 
+        chicken.position.x = positionX;  
         chicken.position.z = jumpDeltaDistance;
         break;
       }
@@ -547,7 +547,7 @@ function animate(timestamp) {
         break;
       }
     }
-
+    
     if(moveDeltaTime > stepTime) {
       switch(moves[0]) {
         case 'forward': {
@@ -570,12 +570,12 @@ function animate(timestamp) {
         }
       }
       moves.shift();
-    
+       
       stepStartTimestamp = moves.length === 0 ? null : timestamp;
     }
   }
 
-
+ 
   if(lanes[currentLane].type === 'car' || lanes[currentLane].type === 'truck') {
     const chickenMinX = chicken.position.x - chickenSize*zoom/2;
     const chickenMaxX = chicken.position.x + chickenSize*zoom/2;

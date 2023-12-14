@@ -2,13 +2,13 @@ body {
   margin: 0;
   font-family: 'Press Start 2P', cursive;
   font-size: 2em;
-  color: rgb(243, 77, 77);
+  color: white;
 }
 button {
   outline: none;
   cursor: pointer;
   border: none;
-  box-shadow: 3px 5px 0px 0px rgba(216, 161, 161, 0.75);
+  box-shadow: 3px 5px 0px 0px rgba(0,0,0,0.75);
 }
 #counter {
   position: absolute;
@@ -25,7 +25,7 @@ button {
   visibility: hidden;
 }
 #end button {
-  background-color: rgb(221, 47, 47);
+  background-color: red;
   padding: 20px 50px 20px 50px;
   font-family: inherit;
   font-size: inherit;
@@ -48,8 +48,8 @@ button {
 }
 #controlls button {
   width: 100%;
-  background-color: rgb(255, 232, 232);
-  border: 1px solid rgb(255, 174, 174);
+  background-color: white;
+  border: 1px solid lightgray;
 }
 #controlls button:first-of-type {
   grid-column: 1/-1;
